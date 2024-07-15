@@ -1,12 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_practise_1/firebase_options.dart';
 //import 'package:carousel_slider/carousel_slider.dart';
 //import 'package:flutter_practise_1/screens/imageSlider.dart';
 import 'package:flutter_practise_1/screens/startscreen.dart';
 
-void main(){
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  try{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(Myapp());
+  }catch(e){
+    print('Error initializing Firebase: $e');
+  }
+  
 }
 
 class Myapp extends StatelessWidget {

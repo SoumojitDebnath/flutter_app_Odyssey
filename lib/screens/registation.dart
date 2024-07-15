@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_practise_1/helper/displayMessage.dart';
 import 'package:flutter_practise_1/screens/login.dart';
 //import 'package:flutter_practise_1/screens/otpScreen.dart';
 import 'package:styled_text/tags/styled_text_tag_icon.dart';
@@ -13,11 +15,22 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   final TextEditingController _confirmPassController = TextEditingController();
   bool _isValid = false;
   String _errorMessage = '';
   String _confirmErrorMessage = '';
+
+  void addUser(BuildContext context) async {
+        try {
+            UserCredential? userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: _passwordController.text,);
+            } on FirebaseAuthException catch(e){
+              Navigator.pop(context);
+              displayMessageToUser(e.code,context);
+            }
+  }
 
   bool _validatePassword(String password) {
     setState(() {
@@ -67,12 +80,13 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                const TextField(
+                TextField(
+                  controller: emailController,
                   cursorColor: Colors.white,
                   style: TextStyle(
                     color: Colors.white,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.black,
                     hintText: "Email",
@@ -133,7 +147,7 @@ class _RegisterState extends State<Register> {
                   obscureText: true,
                   obscuringCharacter: "*",
                   cursorColor: Colors.white,
-                  style: TextStyle(
+                  style:TextStyle(
                     color: Colors.white,
                   ),
                   decoration: InputDecoration(
@@ -169,7 +183,11 @@ class _RegisterState extends State<Register> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Login(status:_isValid)));
+                                builder: (context) {
+                                  addUser(context);
+                                  return Login(status:_isValid);
+                                } ));
+
                       } else if(isValidPassword && _passwordController.text != _confirmPassController.text) {
                         _confirmErrorMessage = 'Passwords are not matched.';
                       }

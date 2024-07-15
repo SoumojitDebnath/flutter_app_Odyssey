@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practise_1/screens/otpScreen.dart';
+import 'package:flutter_practise_1/HomeScreens/page1.dart';
+import 'package:flutter_practise_1/helper/displayMessage.dart';
 import 'package:flutter_practise_1/screens/registation.dart';
 import 'package:styled_text/tags/styled_text_tag_icon.dart';
 import 'package:styled_text/widgets/styled_text.dart';
 
 class Login extends StatefulWidget {
   final bool status;
+  
   const Login({super.key,this.status= false});
   
   
@@ -17,6 +20,32 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void loginAuth() async{
+    showDialog(context: context,
+     builder: (context) => const Center(
+      child: CircularProgressIndicator(),
+     ));
+
+     try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text,);
+
+      //pop loading circle
+      if(context.mounted)Navigator.pop(context);
+
+      // Navigate to new screen upon successful login
+      if (context.mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Page1()), // Replace NewScreen with your target screen
+        );
+      }
+     } on FirebaseAuthException catch(e){
+      Navigator.pop(context);
+      displayMessageToUser(e.code, context);
+     }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -61,10 +90,10 @@ class _LoginState extends State<Login> {
                   controller: emailController,
                   cursorColor: Colors.white,
                   
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     fillColor: Colors.black,
                     hintText: "Email",
@@ -82,6 +111,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 20,),
               TextField(
+                controller: passwordController,
                   obscureText: true,
                   obscuringCharacter: "*",
                   cursorColor: Colors.white,
@@ -109,10 +139,10 @@ class _LoginState extends State<Login> {
             SizedBox(height: 50,),
                ElevatedButton(
             onPressed: (){
-
               
-              Navigator.push(context,
-              MaterialPageRoute(builder:(context)=> OTPScreen(email:emailController.text)));
+                loginAuth();
+                
+              
             },
            child: StyledText(
             text:"Sign in",

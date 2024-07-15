@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "394525986023",
+    "project_id": "ott-platform-d0c5d",
+    "storage_bucket": "ott-platform-d0c5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394525986023:android:9ca287e18fded42883a642",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqUI_kmgEg3Fz9bIy8JzW_pTHMb6msLC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394525986023:android:e337cee168a9283b83a642",
+        "android_client_info": {
+          "package_name": "com.example.flutter_practise_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqUI_kmgEg3Fz9bIy8JzW_pTHMb6msLC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

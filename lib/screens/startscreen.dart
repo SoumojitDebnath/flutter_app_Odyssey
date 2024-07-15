@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter_practise_1/screens/imageSlider.dart';
+import 'package:flutter_practise_1/auth/auth.dart';
+
 
 class Startscreen extends StatefulWidget {
   const Startscreen({super.key});
@@ -23,7 +24,7 @@ class _StartscreenState extends State<Startscreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => Imageslider(),
+            builder: (context) => const AuthPage(),
           ),
         );
       }
